@@ -66,7 +66,25 @@
   <div id="prayer-widget">
     <h3>Today's Prayer Times</h3>
     <p id="today-date">Loading date...</p>
-    <p id="hijri-date" style="text-align:center; font-size: 0.95rem; color:#d4af37; margin-top: -10px;"></p>
+     <h3 style="
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  color: #1d2b49;
+  border-bottom: 2px solid #d4af37;
+  padding-bottom: 5px;
+  margin-top: 20px;
+">
+  Hijri Date
+</h3>
+<p id="hijri-date" style="
+  text-align: center;
+  font-size: 0.95rem;
+  color: #1d2b49;
+  margin-top: 10px;
+">
+  Loading Hijri date...
+</p>
     <ul id="prayer-times"><li>Loading...</li></ul>
   </div>
 
@@ -128,26 +146,21 @@
     </script>
   
     <script>
-  async function getHijriDate() {
-    const today = new Date();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-    const year = today.getFullYear();
-    const dateFormatted = `${month}-${day}-${year}`; // MM-DD-YYYY
+async function getHijriDate() {
+  const today = new Date();
+  const timestamp = Math.floor(today.getTime() / 1000);
 
-    try {
-      const response = await fetch(`https://api.aladhan.com/v1/gToH?date=${dateFormatted}`);
-      const data = await response.json();
-      const hijri = data.data.hijri;
-      const readable = `${hijri.weekday.en}, ${hijri.day} ${hijri.month.en} ${hijri.year} AH`;
-      document.getElementById('hijri-date').textContent = readable;
-    } catch (err) {
-      console.error('Hijri date fetch error:', err);
-      document.getElementById('hijri-date').textContent = 'Hijri date unavailable';
-    }
+  try {
+    const res = await fetch(`https://api.aladhan.com/v1/gToH/${timestamp}`);
+    const data = await res.json();
+    const hijri = data.data.hijri;
+    const readable = `${hijri.day} ${hijri.month.en} ${hijri.year} AH`;
+    document.getElementById('hijri-date').textContent = readable;
+  } catch (error) {
+    document.getElementById('hijri-date').textContent = 'Unable to load Hijri date';
   }
-      
-  getHijriDate();
+}
+getHijriDate();
 </script>
 </body>
 </html>
