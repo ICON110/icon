@@ -51,12 +51,22 @@
   <div class="container">
     <div id="live-player"></div>
 
-    <div id="offline-message">
-      <img src="https://icon110.github.io/icon/Round%20Logo.png" alt="ICON Logo" />
-      <p>The livestream is currently offline.<br>It will appear here when ICON goes live.</p>
-    </div>
+<div id="offline-message" style="
+  background-color: #000;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  padding: 40px 20px;
+  max-width: 100%;
+  color: #fff;
+  text-align: center;
+">
+  <img src="https://github.com/ICON110/icon/blob/502fd1431fda8bb717feaf6b29a2069af2c5f9da/Round%20Logo.png" alt="ICON Logo" style="max-width: 120px; margin-bottom: 20px;" />
+  <p style="font-size: 1.2rem; margin: 0;">
+    The livestream is currently offline.<br>
+    It will appear here when ICON goes live.
+  </p>
+</div>
   </div>
-
   <script>
     const channelId = 'UC8bpVvxuU0oovKDMK5gSBZg';
     const apiKey = 'AIzaSyC8qsT1EGnSdtq8UNpXWdcAlo-sshYn1Zs';
