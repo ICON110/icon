@@ -146,21 +146,28 @@
     </script>
   
     <script>
-async function getHijriDate() {
-  const today = new Date();
-  const timestamp = Math.floor(today.getTime() / 1000);
+  async function getHijriDate() {
+    const today = new Date();
+    const day = String(today.getDate()).padStart(2, '0');
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // JS months are 0-indexed
+    const year = today.getFullYear();
 
-  try {
-    const res = await fetch(`https://api.aladhan.com/v1/gToH/${timestamp}`);
-    const data = await res.json();
-    const hijri = data.data.hijri;
-    const readable = `${hijri.day} ${hijri.month.en} ${hijri.year} AH`;
-    document.getElementById('hijri-date').textContent = readable;
-  } catch (error) {
-    document.getElementById('hijri-date').textContent = 'Unable to load Hijri date';
+    const dateStr = `${day}-${month}-${year}`;
+
+    try {
+      const res = await fetch(`https://api.aladhan.com/v1/gToH?date=${dateStr}`);
+      const data = await res.json();
+      const hijri = data.data.hijri;
+      const readable = `${hijri.day} ${hijri.month.en} ${hijri.year} AH`;
+      document.getElementById('hijri-date').textContent = readable;
+    } catch (error) {
+      console.error('Hijri fetch error:', error);
+      document.getElementById('hijri-date').textContent = 'Unable to load Hijri date';
+    }
   }
-}
-getHijriDate();
+
+  getHijriDate();
+
 </script>
 </body>
 </html>
