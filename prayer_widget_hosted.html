@@ -5,38 +5,60 @@
   <meta charset="UTF-8">
   <title>Shia Prayer Times - Wantagh, NY</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      padding: 20px;
-      display: flex;
-      justify-content: center;
-    }
-    #prayer-widget {
-      max-width: 320px;
-      background-color: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
-    h3 {
-      text-align: center;
-      margin-top: 0;
-    }
-    #today-date {
-      text-align: center;
-      font-weight: bold;
-      margin-bottom: 15px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    li {
-      padding: 6px 0;
-      border-bottom: 1px solid #eee;
-    }
-  </style>
+  body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+
+  #prayer-widget {
+    width: 100%;
+    max-width: 360px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+  }
+
+  h3 {
+    text-align: center;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+
+  #today-date {
+    text-align: center;
+    font-size: 0.95rem;
+    color: #888;
+    margin-bottom: 1.5rem;
+  }
+
+  ul#prayer-times {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  ul#prayer-times li {
+    font-size: 1rem;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    color: #222;
+  }
+
+  ul#prayer-times li:last-child {
+    border-bottom: none;
+  }
+</style>
 </head>
 <body>
   <div id="prayer-widget">
