@@ -86,7 +86,7 @@
         const prayerList = document.getElementById('prayer-times');
         prayerList.innerHTML = '';
 
-        const order = ['Imsak', 'Fajr', 'Sunrise', 'Dhuhr', 'Sunset', 'Maghrib', 'Isha'];
+        const order = ['Imsak', 'Fajr', 'Sunrise', 'Dhuhr', 'Sunset', 'Maghrib'];
         order.forEach(prayer => {
           const li = document.createElement('li');
           li.textContent = `${prayer}: ${applyOffset(timings[prayer], offsets[prayer] || 0)}`;
