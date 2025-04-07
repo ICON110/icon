@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Shia Prayer Times - Wantagh, NY</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+    #prayer-widget {
+      max-width: 320px;
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    h3 {
+      text-align: center;
+      margin-top: 0;
+    }
+    #today-date {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      padding: 6px 0;
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+  <div id="prayer-widget">
+    <h3>Today's Prayer Times</h3>
+    <p id="today-date">Loading date...</p>
+    <ul id="prayer-times"><li>Loading...</li></ul>
+  </div>
+
+  <script>
+    async function fetchPrayerTimes() {
+      const lat = 40.6832;
+      const lon = -73.5101;
+      const method = 12; // Shia Jafari
+      const timeZone = 'America/New_York';
+      const school = 0;
+
+      const today = new Date();
+      const dateStr = today.toLocaleDateString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      });
+      document.getElementById('today-date').textContent = dateStr;
+
+      const timestamp = Math.floor(today.getTime() / 1000);
+
+      try {
+        const response = await fetch(`https://api.aladhan.com/v1/timings/${timestamp}?latitude=${lat}&longitude=${lon}&method=${method}&school=${school}&timezonestring=${timeZone}`);
+        const result = await response.json();
+        const timings = result.data.timings;
+
+        const offsets = {
+          Imsak: -5,
+          Fajr: 0,
+          Sunrise: 0,
+          Dhuhr: 4,
+          Sunset: 0,
+          Maghrib: 15,
+          Isha: 0
+        };
+
+        function applyOffset(time, offset) {
+          const [h, m] = time.split(':').map(Number);
+          const date = new Date();
+          date.setHours(h);
+          date.setMinutes(m + offset);
+          return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        const prayerList = document.getElementById('prayer-times');
+        prayerList.innerHTML = '';
+
+        const order = ['Imsak', 'Fajr', 'Sunrise', 'Dhuhr', 'Sunset', 'Maghrib', 'Isha'];
+        order.forEach(prayer => {
+          const li = document.createElement('li');
+          li.textContent = `${prayer}: ${applyOffset(timings[prayer], offsets[prayer] || 0)}`;
+          prayerList.appendChild(li);
+        });
+
+      } catch (error) {
+        console.error('Error fetching prayer times:', error);
+        document.getElementById('prayer-times').innerHTML = '<li>Error loading prayer times.</li>';
+      }
+    }
+
+    fetchPrayerTimes();
+  </script>
+</body>
+</html>
