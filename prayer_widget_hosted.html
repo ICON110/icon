@@ -148,6 +148,7 @@
     <script>
   async function getHijriDate() {
     const today = new Date();
+    today.setDate(today.getDate() - 1); // Offset by -1 day
     const day = String(today.getDate()).padStart(2, '0');
     const month = String(today.getMonth() + 1).padStart(2, '0'); // JS months are 0-indexed
     const year = today.getFullYear();
